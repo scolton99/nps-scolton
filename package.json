@@ -1,0 +1,30 @@
+{
+  "name": "nps-scolton",
+  "version": "1.0.0",
+  "description": "A new website for the National Parks Service.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pavilion99/nps-scolton.git"
+  },
+  "keywords": [
+    "national",
+    "parks",
+    "service",
+    "mindsump",
+    "capitalone"
+  ],
+  "author": "Spencer Colton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pavilion99/nps-scolton/issues"
+  },
+  "homepage": "https://github.com/pavilion99/nps-scolton#readme",
+  "dependencies": {
+    "express": "^4.17.0",
+    "pug": "^2.0.3"
+  }
+}

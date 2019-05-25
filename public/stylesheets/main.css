@@ -1,0 +1,255 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    display: flex;
+}
+
+div#background-image {
+    position: fixed;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: 1;
+    background-size: cover;
+    background-position: center center;
+}
+
+div#background-image img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.0;
+    transition: opacity 0.25s;
+    object-fit: cover;
+}
+
+div#background-image.loaded img {
+    opacity: 1.0;
+}
+
+section#content {
+    height: 100%;
+    z-index: 1;
+    box-sizing: border-box;
+    position: relative;
+    overflow-y: auto;
+    display: flex;
+    padding: 50px 0 82px 0;
+    width: 100%;
+}
+
+section#content > div.search-container {
+    z-index: 1;
+}
+
+section#content div.search {
+    font-family: 'Raleway', sans-serif;
+    z-index: 1;
+    width: 100%;
+    padding: 10px;
+    background-color: #222;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+}
+
+div.search input[type="text"] {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-size: 1.25em;
+    background-color: #111;
+    color: #fff;
+}
+
+div.search > div.input-group {
+    display: flex;
+}
+
+div.search > div.input-group > input {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+div.search > div.input-group > span.fas {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 24px;
+    line-height: 32px;
+    cursor: pointer;
+    background: black;
+    padding: 10px;
+    color: #aaa;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+div.search > h1 {
+    font-size: 4em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+div#suggestions {
+    border-radius: 5px;
+    box-shadow: black;
+    background-color: #fff;
+    box-sizing: border-box;
+    border: 1px solid #777;
+    padding: 0;
+    width: calc(100% - 20px);
+    margin: 0 auto auto auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+div#suggestions:empty {
+    display: none;
+}
+
+div#suggestions ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+div#suggestions li {
+    transition: background-color 0.1s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+}
+
+div#suggestions li img {
+    height: 64px;
+    width: 64px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+div#suggestions li > div {
+    padding: 10px 0 10px 10px;
+    box-sizing: border-box;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 64px);
+}
+
+div#suggestions li:hover {
+    background-color: #ddd;
+}
+
+div#suggestions h3 {
+    font-family: 'Raleway', sans-serif;
+}
+
+div#suggestions div > p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+}
+
+div#suggestions ul li:first-of-type {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+div#suggestions ul li:last-of-type {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+nav#side-panel {
+    left: -450px;
+    z-index: 4;
+    width: 400px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: left 0.25s;
+    background-color: #333;
+    max-width: 85vw;
+    padding: 15px 0;
+    box-shadow: 0px 0 3px 3px rgba(0,0,0,0.25);
+}
+
+nav#side-panel > header {
+    text-align: center;
+    font-size: 2em;
+    font-family: 'Raleway', sans-serif;
+    color: #ccc;
+}
+
+nav#side-panel.open {
+    left: 0;
+}
+
+div#nav-shade {
+    z-index: 3;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    transition: background-color 0.25s;
+}
+
+div#nav-shade.open {
+    pointer-events: all;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+body > header {
+    background-color: #222;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+}
+
+body > header div:first-of-type {
+    display: flex;
+    align-items: center;
+}
+
+body > header img {
+    height: 35px;
+}
+
+body > header > div:first-of-type > span {
+    font-family: 'Raleway', sans-serif;
+    color: #fff;
+    padding-left: 5px;
+}
+
+body > header span.fas {
+    font-size: 24px;
+    line-height: 40px;
+    color: #fff;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+body > header div:last-of-type {
+    width: 41px;
+}
