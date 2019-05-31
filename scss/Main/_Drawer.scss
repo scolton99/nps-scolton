@@ -1,0 +1,40 @@
+nav#side-panel {
+  left: -450px;
+  z-index: 4;
+  width: 400px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  transition: left 0.25s;
+  background-color: #333;
+  max-width: 85vw;
+  padding: 15px 0;
+  box-shadow: 0 0 3px 3px rgba(0,0,0,0.25);
+
+  > header {
+    text-align: center;
+    font-size: 2em;
+    font-family: 'Montserrat', sans-serif;
+    color: #ccc;
+  }
+}
+
+nav#side-panel.open {
+  left: 0;
+}
+
+div#nav-shade {
+  z-index: 3;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  transition: background-color 0.25s;
+}
+
+div#nav-shade.open {
+  pointer-events: all;
+  background-color: rgba(0, 0, 0, 0.75);
+}

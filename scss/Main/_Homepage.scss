@@ -1,0 +1,47 @@
+section#content {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 74px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  > * {
+    margin-bottom: 10px;
+    z-index: 1;
+  }
+
+  > div.searchbox {
+    background-color: rgba(34, 34, 34, 0.90);
+    padding: 20px;
+
+    > div.input-group {
+      display: flex;
+      align-items: stretch;
+
+      > input#search {
+        padding: 10px;
+        font-family: "Nunito", sans-serif;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border: none;
+        flex-grow: 1;
+        font-size: 1.4em;
+        outline: none;
+      }
+
+      > span.fas.fa-search {
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        cursor: pointer;
+        background-color: #fff;
+        padding: 10px;
+        font-size: 1.6em;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

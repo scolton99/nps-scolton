@@ -3,13 +3,13 @@ html
     head
         meta(charset='UTF-8')
         meta(name='background-number', content=`${background}`)
+        meta(name='page-name', content='homepage')
         meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
         title National Parks Service
-        link(rel='stylesheet', href='/stylesheets/main.css')
-        link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Raleway:700|Nunito&display=swap')
+        link(rel='stylesheet', href='/stylesheets/application.min.css')
+        link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Montserrat:600|Nunito&display=swap')
         link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.8.2/css/all.css')
-        script(src='/scripts/preload.js')
-        script(src='/scripts/main.js')
+        script(src='/scripts/application.min.js')
     body
         div#background-image(style=`background-image: url(/images/background/background-${background}-preload.jpg)`)
             img
@@ -17,15 +17,20 @@ html
             header Advanced Search
         div#nav-shade
         header
-            span.fas.fa-bars#menu-button
-            div.logo-text
+            div.header-left
+                span.fas.fa-bars#menu-button
+            div.header-center
                 img(src='/images/logo.png')
                 span National Parks Service
-            div
+            div.header-right
         section#content
-            div#suggestions
-            div#infobox
-            div.search
+            div.searchbox
                 div.input-group
-                    input#search(type='text', placeholder='Find your next adventure...', autocomplete='off')
+                    input#search(placeholder='Find your next adventure...', autocomplete='off')
                     span.fas.fa-search
+            div#infobox
+                h3 Looking for inspiration?
+                span!= blurb
+            div#suggestions
+
+

@@ -1,0 +1,32 @@
+body.searching {
+  section#content {
+    > div#infobox {
+      pointer-events: none;
+      opacity: 0;
+    }
+  }
+}
+
+section#content {
+  > div#infobox {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    font-family: "Nunito", sans-serif;
+    padding: 10px;
+    background-color: rgba(234, 234, 234, 0.90);
+    margin-bottom: 0;
+    transition: opacity 0.5s;
+  }
+}
+
+@media (screen and max-width: 600px) {
+  section#content {
+    > div#infobox {
+      position: relative;
+      bottom: unset;
+      right: unset;
+      transition: unset;
+    }
+  }
+}

@@ -13,7 +13,12 @@ app.use(Express.static('public'));
 app.use('/parks', ParksRouter);
 
 app.get('/', (_req, res) => {
-    res.render('main/index', {background: Util.getRandomBackgroundImage()});
+    const background_number = Util.getRandomBackgroundImage();
+
+    res.render('main/index', {
+        background: background_number,
+        blurb: Util.getBackgroundBlurb(background_number)
+    });
 });
 
 app.listen(port);

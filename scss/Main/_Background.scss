@@ -1,0 +1,29 @@
+div#background-image {
+  position: fixed;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: 1;
+  background-size: cover;
+  background-position: center center;
+
+  > img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.0;
+    transition: opacity 0.25s;
+    object-fit: cover;
+  }
+}
+
+div#background-image.loaded {
+  > img {
+    opacity: 1.0;
+  }
+}

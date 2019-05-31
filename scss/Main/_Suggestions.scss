@@ -1,0 +1,43 @@
+section#content {
+  div#suggestions {
+    background-color: rgba(34, 34, 34, 0.925);
+    padding: 20px;
+
+    > div.suggestion {
+      display: flex;
+      padding: 10px;
+      background-color: white;
+      cursor: pointer;
+      flex-direction: column;
+      border-radius: 5px;
+
+      > h3 {
+        font-family: "Montserrat", sans-serif;
+      }
+
+      > p {
+        font-family: "Nunito", sans-serif;
+        margin-bottom: 0;
+      }
+    }
+
+    > div.suggestion:not(:last-of-type) {
+      margin-bottom: 15px;
+    }
+
+    > div.suggestion-loading-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    > div.suggestions-empty {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.3em;
+      color: #ddd;
+    }
+  }
+
+  div#suggestions:empty {
+    display: none;
+  }
+}
