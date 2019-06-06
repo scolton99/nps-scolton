@@ -230,6 +230,10 @@ section#content > div#infobox {
     right: unset;
     transition: unset;
   }
+
+    body.searching section#content > div#infobox {
+        display: none;
+    }
 }
 .spinner {
   display: inline-block;

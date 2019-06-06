@@ -29,4 +29,12 @@ section#content {
       transition: unset;
     }
   }
+
+  body.searching {
+    section#content {
+      > div#infobox {
+        display: none;
+      }
+    }
+  }
 }

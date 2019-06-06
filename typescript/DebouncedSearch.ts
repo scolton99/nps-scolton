@@ -18,17 +18,19 @@ namespace NPS {
         private parse_search_text = (): Array<any> => {
             const query_text = (<HTMLInputElement> document.getElementById("search")).value;
             const res = /([^\s]*:[^\s]*)/g.exec(query_text);
-            const search_text = query_text.replace(/([^\s]*:[^\s]*)/g, query_text);
+            const search_text = query_text.replace(/([^\s]*:[^\s]*)/g, "");
 
+            if (res == null)
+                return [search_text.trim(), {}];
 
             let arg_obj = {};
             for (let i: number = 1; i < res.length; i++) {
                 const [key, value]: string[] = res[i].split(":");
 
                 let parsed_value = value;
-                parsed_value = parsed_value.replace("_", " ");
+                parsed_value = parsed_value.replace(/_/g, " ");
 
-                arg_obj[key] = value;
+                arg_obj[key] = parsed_value;
             }
 
             return [search_text.trim(), arg_obj];
@@ -46,22 +48,27 @@ namespace NPS {
             this.last_search = query_text;
             this.suggestions.show_loading();
 
-            // let [text, obj] = this.parse_search_text();
+            let [text, obj] = this.parse_search_text();
 
             const args = {
-                q: query_text,
-                limit: 5,
+                q: text,
+                limit: 25,
                 fields: 'images'
             };
 
-            new APICall('/parks', args, this.fetch_complete.bind(this, query_text));
+            if (obj.stateCode) {
+                args["stateCode"] = obj.stateCode;
+                obj.stateCode = void (0);
+            }
+
+            new APICall('/parks', args, this.fetch_complete.bind(this, query_text, obj));
         };
 
-        private fetch_complete = (query: string, data: object): void => {
+        private fetch_complete = (query: string, params: object, data: object): void => {
             if (query != this.last_search)
                 return;
 
-            this.suggestions.update(data["data"]);
+            this.suggestions.update(data["data"], params);
         };
 
         public search = () => {

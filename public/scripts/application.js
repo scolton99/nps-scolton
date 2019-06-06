@@ -25,8 +25,10 @@ var NPS;
         function Suggestions(domEl) {
             var _this = this;
             this.suggestions = null;
-            this.update = function (suggestions) {
+            this.params = {};
+            this.update = function (suggestions, params) {
                 _this.suggestions = suggestions;
+                _this.params = params;
                 _this.render();
             };
             this.render = function () {
@@ -40,8 +42,28 @@ var NPS;
                     _this.element.appendChild(empty_suggestions);
                     return;
                 }
+                console.log(_this.params);
                 for (var _i = 0, _a = _this.suggestions; _i < _a.length; _i++) {
                     var suggestion = _a[_i];
+                    var failed = false;
+                    for (var _b = 0, _c = Object.keys(_this.params); _b < _c.length; _b++) {
+                        var key = _c[_b];
+                        if (typeof (_this.params[key]) === "undefined")
+                            continue;
+                        if (!suggestion[key]) {
+                            failed = true;
+                            break;
+                        }
+                        console.log(suggestion);
+                        console.log(_this.params);
+                        console.log(key);
+                        if (suggestion[key].toLowerCase() !== _this.params[key].toLowerCase()) {
+                            failed = true;
+                            break;
+                        }
+                    }
+                    if (failed)
+                        continue;
                     var suggestion_div = document.createElement("div");
                     suggestion_div.classList.add("suggestion");
                     var h3 = document.createElement("h3");
@@ -88,13 +110,13 @@ var NPS;
             if (runnow === void 0) { runnow = true; }
             this.execute = function () {
                 var request = APICall.api_req_string('/parks', _this.args);
+                console.log(request);
                 fetch(request).then(function (data) { return data.json(); }).then(_this.callback).catch(_this.onerror);
             };
             this.endpoint = endpoint;
             this.args = args;
             this.callback = callback;
             this.onerror = onerror;
-            console.log(runnow);
             if (runnow)
                 this.execute();
         }
@@ -129,13 +151,15 @@ var NPS;
             this.parse_search_text = function () {
                 var query_text = document.getElementById("search").value;
                 var res = /([^\s]*:[^\s]*)/g.exec(query_text);
-                var search_text = query_text.replace(/([^\s]*:[^\s]*)/g, query_text);
+                var search_text = query_text.replace(/([^\s]*:[^\s]*)/g, "");
+                if (res == null)
+                    return [search_text.trim(), {}];
                 var arg_obj = {};
                 for (var i = 1; i < res.length; i++) {
                     var _a = res[i].split(":"), key = _a[0], value = _a[1];
                     var parsed_value = value;
-                    parsed_value = parsed_value.replace("_", " ");
-                    arg_obj[key] = value;
+                    parsed_value = parsed_value.replace(/_/g, " ");
+                    arg_obj[key] = parsed_value;
                 }
                 return [search_text.trim(), arg_obj];
             };
@@ -148,18 +172,22 @@ var NPS;
                 }
                 _this.last_search = query_text;
                 _this.suggestions.show_loading();
-                // let [text, obj] = this.parse_search_text();
+                var _a = _this.parse_search_text(), text = _a[0], obj = _a[1];
                 var args = {
-                    q: query_text,
-                    limit: 5,
+                    q: text,
+                    limit: 25,
                     fields: 'images'
                 };
-                new NPS.APICall('/parks', args, _this.fetch_complete.bind(_this, query_text));
+                if (obj.stateCode) {
+                    args["stateCode"] = obj.stateCode;
+                    obj.stateCode = void (0);
+                }
+                new NPS.APICall('/parks', args, _this.fetch_complete.bind(_this, query_text, obj));
             };
-            this.fetch_complete = function (query, data) {
+            this.fetch_complete = function (query, params, data) {
                 if (query != _this.last_search)
                     return;
-                _this.suggestions.update(data["data"]);
+                _this.suggestions.update(data["data"], params);
             };
             this.search = function () {
                 if (_this.timeout != null)

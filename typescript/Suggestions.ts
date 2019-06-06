@@ -2,13 +2,15 @@ namespace NPS {
     export class Suggestions {
         private readonly element: HTMLElement;
         private suggestions: object[] = null;
+        private params: object = {};
 
         constructor(domEl: HTMLElement) {
             this.element = domEl;
         }
 
-        public update = (suggestions: object[]): void => {
+        public update = (suggestions: object[], params: object): void => {
             this.suggestions = suggestions;
+            this.params = params;
             this.render();
         };
 
@@ -29,7 +31,31 @@ namespace NPS {
                 return;
             }
 
+            console.log(this.params);
+
             for (const suggestion of this.suggestions) {
+                let failed: boolean = false;
+                for (const key of Object.keys(this.params)) {
+                    if (typeof (this.params[key]) === "undefined")
+                        continue;
+
+                    if (!suggestion[key]) {
+                        failed = true;
+                        break;
+                    }
+
+                    console.log(suggestion);
+                    console.log(this.params);
+                    console.log(key);
+
+                    if (suggestion[key].toLowerCase() !== this.params[key].toLowerCase()) {
+                        failed = true;
+                        break;
+                    }
+                }
+                if (failed)
+                    continue;
+
                 const suggestion_div: HTMLElement = document.createElement("div");
                 suggestion_div.classList.add("suggestion");
 

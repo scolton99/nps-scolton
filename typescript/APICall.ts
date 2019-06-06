@@ -14,14 +14,13 @@ namespace NPS {
             this.callback = callback;
             this.onerror = onerror;
 
-            console.log(runnow);
-
             if (runnow)
                 this.execute();
         }
 
         public execute = (): void => {
             const request = APICall.api_req_string('/parks', this.args);
+            console.log(request);
 
             fetch(request).then(data => data.json()).then(this.callback).catch(this.onerror);
         };
