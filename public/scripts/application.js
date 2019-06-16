@@ -107,9 +107,10 @@ var NPS;
     var APICall = /** @class */ (function () {
         function APICall(endpoint, args, callback, onerror, runnow) {
             var _this = this;
+            if (onerror === void 0) { onerror = function (data) { console.error(data); }; }
             if (runnow === void 0) { runnow = true; }
             this.execute = function () {
-                var request = APICall.api_req_string('/parks', _this.args);
+                var request = APICall.api_req_string(_this.endpoint, _this.args);
                 console.log(request);
                 fetch(request).then(function (data) { return data.json(); }).then(_this.callback).catch(_this.onerror);
             };
@@ -296,6 +297,61 @@ var NPS;
                         break;
                     }
                     case "park": {
+                        var park_code = document.querySelector("meta[name='park-name']").getAttribute('content');
+                        var campgrounds_args = {
+                            parkCode: park_code
+                        };
+                        var campgrounds_search = new NPS.APICall('/campgrounds', campgrounds_args, function (data) {
+                            console.log(data);
+                        });
+                        var visitor_centers_args = {
+                            parkCode: park_code
+                        };
+                        var visitor_centers_search = new NPS.APICall('/visitorcenters', visitor_centers_args, function (data) {
+                            console.log(data);
+                        });
+                        var alerts_args = {
+                            parkCode: park_code
+                        };
+                        var alerts_search = new NPS.APICall('/alerts', alerts_args, function (data) {
+                            console.log(data);
+                        });
+                        var events_args = {
+                            parkCode: park_code
+                        };
+                        var events_search = new NPS.APICall('/events', events_args, function (data) {
+                            console.log(data);
+                        });
+                        var articles_args = {
+                            parkCode: park_code
+                        };
+                        var articles_search = new NPS.APICall('/articles', articles_args, function (data) {
+                            console.log(data);
+                        });
+                        var news_releases_args = {
+                            parkCode: park_code
+                        };
+                        var news_releases_search = new NPS.APICall('/newsreleases', news_releases_args, function (data) {
+                            console.log(data);
+                        });
+                        var people_args = {
+                            parkCode: park_code
+                        };
+                        var people_search = new NPS.APICall('/people', people_args, function (data) {
+                            console.log(data);
+                        });
+                        var lesson_plans_args = {
+                            parkCode: park_code
+                        };
+                        var lesson_plans_search = new NPS.APICall('/events', lesson_plans_args, function (data) {
+                            console.log(data);
+                        });
+                        var places_args = {
+                            parkCode: park_code
+                        };
+                        var places_search = new NPS.APICall('/events', places_args, function (data) {
+                            console.log(data);
+                        });
                         break;
                     }
                 }

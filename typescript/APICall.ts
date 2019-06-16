@@ -8,7 +8,11 @@ namespace NPS {
         private readonly callback: ((object) => any);
         private readonly onerror: ((data: any) => any);
 
-        constructor(endpoint: string, args: object, callback: ((data: any) => any), onerror?: ((data: any) => any), runnow: boolean = true) {
+        constructor(endpoint: string,
+                    args: object,
+                    callback: ((data: any) => any),
+                    onerror: ((data: any) => any) = data => {console.error(data)},
+                    runnow: boolean = true) {
             this.endpoint = endpoint;
             this.args = args;
             this.callback = callback;
@@ -19,7 +23,7 @@ namespace NPS {
         }
 
         public execute = (): void => {
-            const request = APICall.api_req_string('/parks', this.args);
+            const request = APICall.api_req_string(this.endpoint, this.args);
             console.log(request);
 
             fetch(request).then(data => data.json()).then(this.callback).catch(this.onerror);

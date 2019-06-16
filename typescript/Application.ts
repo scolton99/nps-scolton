@@ -50,6 +50,70 @@ namespace NPS {
                     break;
                 }
                 case "park": {
+                    const park_code = document.querySelector("meta[name='park-name']").getAttribute('content');
+
+                    const campgrounds_args = {
+                        parkCode: park_code
+                    };
+                    const campgrounds_search = new APICall('/campgrounds', campgrounds_args, data => {
+                        console.log(data);
+                    });
+
+                    const visitor_centers_args = {
+                        parkCode: park_code
+                    };
+                    const visitor_centers_search = new APICall('/visitorcenters', visitor_centers_args, data => {
+                        console.log(data);
+                    });
+
+                    const alerts_args = {
+                        parkCode: park_code
+                    };
+                    const alerts_search = new APICall('/alerts', alerts_args, data => {
+                        console.log(data);
+                    });
+
+                    const events_args = {
+                        parkCode: park_code
+                    };
+                    const events_search = new APICall('/events', events_args, data => {
+                        console.log(data);
+                    });
+
+                    const articles_args = {
+                        parkCode: park_code
+                    };
+                    const articles_search = new APICall('/articles', articles_args, data => {
+                        console.log(data);
+                    });
+
+                    const news_releases_args = {
+                        parkCode: park_code
+                    };
+                    const news_releases_search = new APICall('/newsreleases', news_releases_args, data => {
+                        console.log(data);
+                    });
+
+                    const people_args = {
+                        parkCode: park_code
+                    };
+                    const people_search = new APICall('/people', people_args, data => {
+                        console.log(data);
+                    });
+
+                    const lesson_plans_args = {
+                        parkCode: park_code
+                    };
+                    const lesson_plans_search = new APICall('/events', lesson_plans_args, data => {
+                        console.log(data);
+                    });
+
+                    const places_args = {
+                        parkCode: park_code
+                    };
+                    const places_search = new APICall('/events', places_args, data => {
+                        console.log(data);
+                    });
 
                     break;
                 }

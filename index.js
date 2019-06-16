@@ -10,7 +10,7 @@ app.set('view engine', 'pug');
 
 app.use(Express.static('public'));
 
-app.use('/parks', ParksRouter);
+app.use('/park', ParksRouter);
 
 app.get('/', (_req, res) => {
     const background_number = Util.getRandomBackgroundImage();

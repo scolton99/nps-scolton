@@ -1,0 +1,25 @@
+body.park {
+  > section#content {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    > div {
+      width: 600px;
+      max-width: 100%;
+
+      font-family: "Nunito", sans-serif;
+
+      padding: 10px;
+
+      flex-grow: 0;
+      align-self: flex-start;
+
+      border-radius: 5px;
+      background-color: #fff;
+      margin: 10px;
+    }
+  }
+}

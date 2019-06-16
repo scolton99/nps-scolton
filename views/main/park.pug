@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='background-number', content=`${background}`)
+        meta(name='page-name', content='park')
+        meta(name='park-name', content=park)
+        meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+        title National Parks Service
+        link(rel='stylesheet', href='/stylesheets/application.min.css')
+        link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Montserrat:600|Nunito&display=swap')
+        link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.8.2/css/all.css')
+        script(src='/scripts/application.min.js')
+    body.park
+        div#background-image(style=`background-image: url(/images/background/background-${background}-preload.jpg)`)
+            img
+        header
+            div.header-left
+                a(href='/')
+                    span.fas.fa-home#home-button
+            div.header-center
+                img(src='/images/logo.png')
+                span National Parks Service
+            div.header-right
+        section#content
+            div asdf
+
+
+

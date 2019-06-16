@@ -3,7 +3,7 @@ const router = Express.Router();
 
 router.get('/:name', (req, res) => {
     res.render('main/park', {
-        name: req.params.name
+        park: req.params.name
     });
 });
 

@@ -23,7 +23,7 @@ body > header > div.header-left {
   display: flex;
   align-items: center;
 }
-body > header > div.header-left > span.fas {
+body > header > div.header-left > span.fas, body > header > div.header-left > a > span.fas {
   font-size: 24px;
   line-height: 40px;
   color: #fff;
@@ -50,6 +50,10 @@ body > header > div.header-right {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+body.park {
+  background-color: #555;
 }
 
 a, a:visited, a:hover {
@@ -231,10 +235,29 @@ section#content > div#infobox {
     transition: unset;
   }
 
-    body.searching section#content > div#infobox {
-        display: none;
-    }
+  body.searching section#content > div#infobox {
+    display: none;
+  }
 }
+body.park > section#content {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+body.park > section#content > div {
+  width: 600px;
+  max-width: 100%;
+  font-family: "Nunito", sans-serif;
+  padding: 10px;
+  flex-grow: 0;
+  align-self: flex-start;
+  border-radius: 5px;
+  background-color: #fff;
+  margin: 10px;
+}
+
 .spinner {
   display: inline-block;
   width: 64px;
