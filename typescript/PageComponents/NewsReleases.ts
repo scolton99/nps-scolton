@@ -124,7 +124,13 @@ namespace NPS {
 
                 const date = document.createElement("div");
                 date.classList.add("date");
-                date.textContent = NewsReleases.formatDate(new Date(news_release_date));
+
+                const date_parts = news_release_date.replace(/\.0/g, "").split(" ")[0].split("-");
+                const year = parseInt(date_parts[0]);
+                const month = parseInt(date_parts[1]) - 1;
+                const day = parseInt(date_parts[2]);
+
+                date.textContent = NewsReleases.formatDate(new Date(year, month, day));
 
                 const abstract = document.createElement("div");
                 abstract.classList.add("abstract");
