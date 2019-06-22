@@ -15,6 +15,10 @@ namespace NPS {
                 this.container.removeChild(this.container.firstChild);
         }
 
+        hide() {
+            this.container.classList.add("hidden");
+        }
+
         showLoading() {
             this.clear();
 

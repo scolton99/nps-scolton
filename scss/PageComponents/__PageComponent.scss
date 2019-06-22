@@ -1,3 +1,5 @@
-body.park > section#content > div:empty {
-    display: none;
+body.park > section#content {
+    > div:empty, > div.hidden {
+        display: none;
+    }
 }

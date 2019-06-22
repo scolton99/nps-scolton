@@ -8,3 +8,4 @@
 /// <reference path="PageComponents/LessonPlans.ts" />
 /// <reference path="PageComponents/NewsReleases.ts" />
 /// <reference path="PageComponents/Articles.ts" />
+/// <reference path="PageComponents/Events.ts" />

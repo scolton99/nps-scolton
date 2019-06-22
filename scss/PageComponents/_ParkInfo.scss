@@ -69,3 +69,11 @@ body.park > section#content > div {
     }
 }
 
+@media screen and (max-width: 600px) {
+    body.park > section#content > div {
+        > section.desc-map {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}

@@ -287,6 +287,9 @@ var NPS;
             while (this.container.firstChild)
                 this.container.removeChild(this.container.firstChild);
         };
+        PageComponent.prototype.hide = function () {
+            this.container.classList.add("hidden");
+        };
         PageComponent.prototype.showLoading = function () {
             this.clear();
             var loading_container = document.createElement("div");
@@ -591,6 +594,23 @@ var NPS;
     }(NPS.PageComponent));
     NPS.Articles = Articles;
 })(NPS || (NPS = {}));
+/// <reference path="PageComponent.ts" />
+var NPS;
+(function (NPS) {
+    var Events = /** @class */ (function (_super) {
+        __extends(Events, _super);
+        function Events(data, container) {
+            var _this = _super.call(this, data, container) || this;
+            _this.render = function () {
+                _this.clear();
+            };
+            _this.render();
+            return _this;
+        }
+        return Events;
+    }(NPS.PageComponent));
+    NPS.Events = Events;
+})(NPS || (NPS = {}));
 /// <reference path="Util.ts" />
 /// <reference path="Suggestions.ts" />
 /// <reference path="DebouncedSearch.ts" />
@@ -601,6 +621,7 @@ var NPS;
 /// <reference path="PageComponents/LessonPlans.ts" />
 /// <reference path="PageComponents/NewsReleases.ts" />
 /// <reference path="PageComponents/Articles.ts" />
+/// <reference path="PageComponents/Events.ts" />
 /// <reference path="Dependencies.ts" />
 var NPS;
 (function (NPS) {
@@ -658,14 +679,14 @@ var NPS;
                             parkCode: park_code
                         };
                         var events_search = new NPS.APICall('/events', events_args, function (data) {
-                            // console.log(data);
+                            console.log(data);
+                            new NPS.Events(data.data, document.getElementById("park-events"));
                         });
                         var articles_args = {
                             parkCode: park_code,
                             limit: 7
                         };
-                        var articles_search = new NPS.APICall('/articles', articles_args, function (data) {
-                            console.log(data);
+                        new NPS.APICall('/articles', articles_args, function (data) {
                             new NPS.Articles(data.data, document.getElementById("park-articles"));
                         });
                         var news_releases_args = {
