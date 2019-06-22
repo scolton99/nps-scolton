@@ -74,6 +74,11 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Montserrat", sans-serif;
 }
 
+@import 'PageComponents/_PageComponent';
+@import 'PageComponents/ParkInfo';
+@import 'PageComponents/LessonPlans';
+@import 'PageComponents/NewsReleases';
+@import 'PageComponents/Articles';
 @import 'Main/Background';
 @import 'Main/Drawer';
 @import 'Main/Homepage';

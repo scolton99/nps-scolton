@@ -56,21 +56,21 @@ namespace NPS {
                         parkCode: park_code
                     };
                     const campgrounds_search = new APICall('/campgrounds', campgrounds_args, data => {
-                        console.log(data);
+                        // console.log(data);
                     });
 
                     const visitor_centers_args = {
                         parkCode: park_code
                     };
                     const visitor_centers_search = new APICall('/visitorcenters', visitor_centers_args, data => {
-                        console.log(data);
+                        // console.log(data);
                     });
 
                     const alerts_args = {
                         parkCode: park_code
                     };
                     const alerts_search = new APICall('/alerts', alerts_args, data => {
-                        console.log(data);
+                        // console.log(data);
                     });
 
                     const events_args = {
@@ -78,41 +78,57 @@ namespace NPS {
                     };
                     const events_search = new APICall('/events', events_args, data => {
                         console.log(data);
+
+                        new Events(data.data, document.getElementById("park-events"));
                     });
 
                     const articles_args = {
-                        parkCode: park_code
+                        parkCode: park_code,
+                        limit: 7
                     };
-                    const articles_search = new APICall('/articles', articles_args, data => {
-                        console.log(data);
+                    new APICall('/articles', articles_args, data => {
+                        new Articles(data.data, document.getElementById("park-articles"));
                     });
 
                     const news_releases_args = {
-                        parkCode: park_code
+                        parkCode: park_code,
+                        limit: 6
                     };
-                    const news_releases_search = new APICall('/newsreleases', news_releases_args, data => {
-                        console.log(data);
+                    new APICall('/newsreleases', news_releases_args, data => {
+                        new NewsReleases(data.data, document.getElementById("park-news-releases"));
                     });
 
                     const people_args = {
                         parkCode: park_code
                     };
                     const people_search = new APICall('/people', people_args, data => {
-                        console.log(data);
+                        // console.log(data);
                     });
 
+                
                     const lesson_plans_args = {
                         parkCode: park_code
                     };
-                    const lesson_plans_search = new APICall('/events', lesson_plans_args, data => {
-                        console.log(data);
+                    new APICall('/lessonplans', lesson_plans_args, data => {
+                        new LessonPlans(data.data, document.getElementById("park-lesson-plans"));
                     });
 
+                    // Not sure this exists?
                     const places_args = {
                         parkCode: park_code
                     };
-                    const places_search = new APICall('/events', places_args, data => {
-                        console.log(data);
+                    new APICall('/places', places_args, data => {
+                        // console.log(data);
+
+                        new Places(data, document.getElementById("park-places"));
+                    });
+
+                    const park_data_args = {
+                        parkCode: park_code,
+                        fields: 'images'
+                    };
+                    new APICall('/parks', park_data_args, data => {
+                        new ParkInfo(data.data, document.getElementById("park-info"));
                     });
 
                     break;

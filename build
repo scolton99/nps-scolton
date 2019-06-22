@@ -1,0 +1,4 @@
+tsc
+sass scss/Application.scss public/stylesheets/application.css
+yuicompressor public/stylesheets/application.css -o public/stylesheets/application.min.css
+uglifyjs public/scripts/application.js -o public/scripts/application.min.js

@@ -1,3 +1,9 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .spinner {
   display: inline-block;
   width: 64px;
@@ -14,6 +20,10 @@
   border: 3px solid;
   border-color: #fff #fff #fff transparent;
   animation: spinner 0.8s linear infinite;
+}
+
+.spinner.dark:after {
+  border-color: #444 #444 #444 transparent;
 }
 
 @keyframes spinner {

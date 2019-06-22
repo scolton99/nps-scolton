@@ -24,7 +24,6 @@ namespace NPS {
 
         public execute = (): void => {
             const request = APICall.api_req_string(this.endpoint, this.args);
-            console.log(request);
 
             fetch(request).then(data => data.json()).then(this.callback).catch(this.onerror);
         };

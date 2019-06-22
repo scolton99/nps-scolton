@@ -1,0 +1,71 @@
+body.park > section#content > div {
+    > header {
+        h1 {
+            margin-bottom: 10px;
+            font-size: 1.7em;
+            text-align: center;
+        }
+    }
+
+    > section.image {
+        margin: 0 -10px 10px -10px;
+        box-shadow: inset 0px 0px 12px -2px rgba(0,0,0,0.75);
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        height: 175px;
+        position: relative;
+
+        div {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.75);
+            text-align: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.15s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        div:hover {
+            opacity: 1.0;
+        }
+    }
+
+    > section.desc-map {
+        display: flex;
+        margin-bottom: 10px;
+
+        > div {
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: 0;
+        }
+    }
+
+    > footer {
+        background-color: #ccc;
+        margin: 0 -10px -10px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        box-shadow: inset 0px 5px 12px -2px rgba(0,0,0,0.3);
+
+        a {
+            font-weight: bold;
+        }
+    }
+
+    > hr {
+        margin: 0 -10px;
+    }
+}
+

@@ -66,6 +66,104 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Montserrat", sans-serif;
 }
 
+body.park > section#content > div:empty {
+  display: none;
+}
+
+body.park > section#content > div > header h1 {
+  margin-bottom: 10px;
+  font-size: 1.7em;
+  text-align: center;
+}
+body.park > section#content > div > section.image {
+  margin: 0 -10px 10px -10px;
+  box-shadow: inset 0px 0px 12px -2px rgba(0, 0, 0, 0.75);
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  height: 175px;
+  position: relative;
+}
+body.park > section#content > div > section.image div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  text-align: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+body.park > section#content > div > section.image div:hover {
+  opacity: 1;
+}
+body.park > section#content > div > section.desc-map {
+  display: flex;
+  margin-bottom: 10px;
+}
+body.park > section#content > div > section.desc-map > div {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+body.park > section#content > div > footer {
+  background-color: #ccc;
+  margin: 0 -10px -10px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  box-shadow: inset 0px 5px 12px -2px rgba(0, 0, 0, 0.3);
+}
+body.park > section#content > div > footer a {
+  font-weight: bold;
+}
+body.park > section#content > div > hr {
+  margin: 0 -10px;
+}
+
+body.park > section#content > div div.duration {
+  font-weight: normal;
+  font-family: "Nunito", sans-serif;
+  font-style: italic;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
+body.park > section#content > div div.objective {
+  margin-bottom: 20px;
+}
+
+body.park > section#content > div div.news-release-display, body.park > section#content > div div.article-display {
+  display: flex;
+  margin-bottom: 10px;
+}
+body.park > section#content > div div.news-release-display > img, body.park > section#content > div div.article-display > img {
+  min-width: 110px;
+  margin: 5px;
+  object-fit: cover;
+  width: 110px;
+  height: 110px;
+  flex: 0 0 0;
+}
+body.park > section#content > div div.news-release-display > div.title-abstract, body.park > section#content > div div.news-release-display > div.title-description, body.park > section#content > div div.article-display > div.title-abstract, body.park > section#content > div div.article-display > div.title-description {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 110px;
+  padding: 5px;
+}
+body.park > section#content > div div.news-release-display > div.title-abstract > div.date, body.park > section#content > div div.news-release-display > div.title-description > div.date, body.park > section#content > div div.article-display > div.title-abstract > div.date, body.park > section#content > div div.article-display > div.title-description > div.date {
+  margin-bottom: 10px;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
 div#background-image {
   position: fixed;
   top: -10px;
@@ -258,6 +356,12 @@ body.park > section#content > div {
   margin: 10px;
 }
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .spinner {
   display: inline-block;
   width: 64px;
@@ -274,6 +378,10 @@ body.park > section#content > div {
   border: 3px solid;
   border-color: #fff #fff #fff transparent;
   animation: spinner 0.8s linear infinite;
+}
+
+.spinner.dark:after {
+  border-color: #444 #444 #444 transparent;
 }
 
 @keyframes spinner {

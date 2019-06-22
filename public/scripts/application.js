@@ -1,3 +1,16 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var NPS;
 (function (NPS) {
     var Util = /** @class */ (function () {
@@ -43,11 +56,10 @@ var NPS;
                     return;
                 }
                 console.log(_this.params);
-                for (var _i = 0, _a = _this.suggestions; _i < _a.length; _i++) {
-                    var suggestion = _a[_i];
+                var _loop_1 = function (suggestion) {
                     var failed = false;
-                    for (var _b = 0, _c = Object.keys(_this.params); _b < _c.length; _b++) {
-                        var key = _c[_b];
+                    for (var _i = 0, _a = Object.keys(_this.params); _i < _a.length; _i++) {
+                        var key = _a[_i];
                         if (typeof (_this.params[key]) === "undefined")
                             continue;
                         if (!suggestion[key]) {
@@ -63,7 +75,7 @@ var NPS;
                         }
                     }
                     if (failed)
-                        continue;
+                        return "continue";
                     var suggestion_div = document.createElement("div");
                     suggestion_div.classList.add("suggestion");
                     var h3 = document.createElement("h3");
@@ -72,7 +84,14 @@ var NPS;
                     p.textContent = suggestion["description"];
                     suggestion_div.appendChild(h3);
                     suggestion_div.appendChild(p);
+                    suggestion_div.addEventListener("click", function () {
+                        window.location.href = "/park/" + suggestion["parkCode"];
+                    });
                     _this.element.appendChild(suggestion_div);
+                };
+                for (var _i = 0, _a = _this.suggestions; _i < _a.length; _i++) {
+                    var suggestion = _a[_i];
+                    _loop_1(suggestion);
                 }
             };
             this.show_loading = function () {
@@ -111,7 +130,6 @@ var NPS;
             if (runnow === void 0) { runnow = true; }
             this.execute = function () {
                 var request = APICall.api_req_string(_this.endpoint, _this.args);
-                console.log(request);
                 fetch(request).then(function (data) { return data.json(); }).then(_this.callback).catch(_this.onerror);
             };
             this.endpoint = endpoint;
@@ -258,11 +276,331 @@ var NPS;
     }());
     NPS.Background = Background;
 })(NPS || (NPS = {}));
+var NPS;
+(function (NPS) {
+    var PageComponent = /** @class */ (function () {
+        function PageComponent(data, container) {
+            this.data = data;
+            this.container = container;
+        }
+        PageComponent.prototype.clear = function () {
+            while (this.container.firstChild)
+                this.container.removeChild(this.container.firstChild);
+        };
+        PageComponent.prototype.showLoading = function () {
+            this.clear();
+            var loading_container = document.createElement("div");
+            loading_container.classList.add("loading-container");
+            var spinner = document.createElement("span");
+            spinner.classList.add("spinner");
+            spinner.classList.add("dark");
+            loading_container.appendChild(spinner);
+            this.container.appendChild(loading_container);
+        };
+        return PageComponent;
+    }());
+    NPS.PageComponent = PageComponent;
+})(NPS || (NPS = {}));
+/// <reference path="PageComponent.ts" />
+var NPS;
+(function (NPS) {
+    var ParkInfo = /** @class */ (function (_super) {
+        __extends(ParkInfo, _super);
+        function ParkInfo(data, container) {
+            var _this = _super.call(this, data, container) || this;
+            // Business logic for rendering park info goes here
+            _this.render = function () {
+                // Get a clean slate for rendering
+                _this.clear();
+                var _a = _this.data[0], name = _a.fullName, lat_long_raw = _a.latLong, description = _a.description, _b = _a.images[0], img_src = _b.url, img_alt = _b.altText, img_caption = _b.caption, img_credit = _b.credit, weather_info = _a.weatherInfo, directions_url = _a.directionsUrl;
+                var header = document.createElement("header");
+                var heading = document.createElement("h1");
+                heading.textContent = name;
+                header.appendChild(heading);
+                _this.container.appendChild(header);
+                var image_container = document.createElement("section");
+                image_container.classList.add("image");
+                image_container.style.background = "url(" + img_src + ")";
+                image_container.style.backgroundSize = "cover";
+                image_container.title = img_alt;
+                var image_caption = document.createElement("div");
+                image_caption.innerHTML = img_caption + "<br><br>Credit: " + img_credit;
+                image_container.appendChild(image_caption);
+                _this.container.appendChild(image_container);
+                var desc_map = document.createElement("section");
+                desc_map.classList.add("desc-map");
+                var map = document.createElement("iframe");
+                var lat_long_arr = lat_long_raw.split(",");
+                var lat_long = {
+                    lat: lat_long_arr[0].split(":")[1].trim(),
+                    long: lat_long_arr[1].split(":")[1].trim()
+                };
+                var lat = lat_long.lat, long = lat_long.long;
+                var map_src = "https://www.google.com/maps/embed/v1/view?key=AIzaSyB-M5tJXFIL2ANThjOaCNcYl2DyJsPastI";
+                map_src += "&center=" + lat + "," + long;
+                map_src += "&zoom=10";
+                map.src = map_src;
+                map.setAttribute("frameborder", "0");
+                map.style.border = "none";
+                map.width = "250";
+                map.height = "250";
+                var desc = document.createElement("div");
+                desc.textContent = description;
+                desc_map.appendChild(desc);
+                desc_map.appendChild(map);
+                _this.container.appendChild(desc_map);
+                var footer = document.createElement("footer");
+                _this.container.appendChild(footer);
+                var weather = document.createElement("a");
+                weather.href = weather_info;
+                weather.textContent = "Get Weather";
+                var directions = document.createElement("a");
+                directions.href = directions_url;
+                directions.textContent = "Get Directions";
+                footer.appendChild(weather);
+                footer.appendChild(directions);
+                _this.container.appendChild(footer);
+            };
+            _this.render();
+            return _this;
+        }
+        return ParkInfo;
+    }(NPS.PageComponent));
+    NPS.ParkInfo = ParkInfo;
+})(NPS || (NPS = {}));
+/// <reference path="PageComponent.ts" />
+var NPS;
+(function (NPS) {
+    var Places = /** @class */ (function (_super) {
+        __extends(Places, _super);
+        function Places(data, container) {
+            var _this = _super.call(this, data, container) || this;
+            _this.render = function () {
+                // Get a clean slate for rendering
+                while (_this.container.firstChild)
+                    _this.container.removeChild(_this.container.firstChild);
+            };
+            _this.render();
+            return _this;
+        }
+        return Places;
+    }(NPS.PageComponent));
+    NPS.Places = Places;
+})(NPS || (NPS = {}));
+/// <reference path="PageComponent.ts" />
+var NPS;
+(function (NPS) {
+    var LessonPlans = /** @class */ (function (_super) {
+        __extends(LessonPlans, _super);
+        function LessonPlans(data, container) {
+            var _this = _super.call(this, data, container) || this;
+            _this.render = function () {
+                _this.clear();
+                var header = document.createElement("header");
+                var heading = document.createElement("h1");
+                heading.textContent = "Lesson Plans";
+                header.appendChild(heading);
+                _this.container.appendChild(header);
+                for (var _i = 0, _a = _this.data; _i < _a.length; _i++) {
+                    var lesson_plan = _a[_i];
+                    var lesson_title = lesson_plan.title, lesson_url = lesson_plan.url, lesson_duration = lesson_plan.duration, lesson_objective = lesson_plan.questionobjective, lesson_subject = lesson_plan.subject;
+                    var title = document.createElement("h4");
+                    var title_a = document.createElement("a");
+                    title_a.textContent = lesson_title;
+                    title_a.href = lesson_url;
+                    title.appendChild(title_a);
+                    _this.container.appendChild(title);
+                    var duration = document.createElement("div");
+                    duration.textContent = lesson_duration + ", " + lesson_subject.replace(/,/g, ", ");
+                    duration.classList.add("duration");
+                    _this.container.appendChild(duration);
+                    var obj = document.createElement("div");
+                    obj.classList.add("objective");
+                    obj.innerHTML = lesson_objective.replace(/;\s*/g, "<br>");
+                    _this.container.appendChild(obj);
+                }
+            };
+            _this.render();
+            return _this;
+        }
+        return LessonPlans;
+    }(NPS.PageComponent));
+    NPS.LessonPlans = LessonPlans;
+})(NPS || (NPS = {}));
+/// <reference path="PageComponent.ts" />
+var NPS;
+(function (NPS) {
+    var NewsReleases = /** @class */ (function (_super) {
+        __extends(NewsReleases, _super);
+        function NewsReleases(data, container) {
+            var _this = _super.call(this, data, container) || this;
+            _this.render = function () {
+                _this.clear();
+                var header = document.createElement("header");
+                var heading = document.createElement("h1");
+                heading.textContent = "News Releases";
+                header.appendChild(heading);
+                _this.container.appendChild(header);
+                console.log(_this.data);
+                for (var _i = 0, _a = _this.data; _i < _a.length; _i++) {
+                    var news_release = _a[_i];
+                    var _b = news_release.image, image_alt = _b.altText, image_url = _b.url, image_credit = _b.credit, news_release_title = news_release.title, news_release_url = news_release.url, news_release_date = news_release.releasedate, news_release_abstract = news_release.abstract;
+                    var display = document.createElement("div");
+                    display.classList.add("news-release-display");
+                    var preview_image = document.createElement("img");
+                    if (image_credit !== "") {
+                        preview_image.alt = image_alt;
+                        preview_image.src = image_url;
+                    }
+                    else {
+                        preview_image.alt = "No image";
+                        preview_image.src = "/images/placeholder.jpg";
+                    }
+                    display.appendChild(preview_image);
+                    var title_abstract = document.createElement("div");
+                    title_abstract.classList.add("title-abstract");
+                    var title = document.createElement("h4");
+                    title.classList.add("title");
+                    var title_a = document.createElement("a");
+                    title_a.href = news_release_url;
+                    title_a.textContent = news_release_title;
+                    title.appendChild(title_a);
+                    var date = document.createElement("div");
+                    date.classList.add("date");
+                    date.textContent = NewsReleases.formatDate(new Date(news_release_date));
+                    var abstract = document.createElement("div");
+                    abstract.classList.add("abstract");
+                    abstract.textContent = news_release_abstract;
+                    title_abstract.appendChild(title);
+                    title_abstract.appendChild(date);
+                    title_abstract.appendChild(abstract);
+                    display.appendChild(title_abstract);
+                    _this.container.appendChild(display);
+                }
+            };
+            _this.render();
+            return _this;
+        }
+        NewsReleases.formatDate = function (date) {
+            var year = date.getFullYear();
+            var month_num = date.getMonth();
+            var month;
+            switch (month_num) {
+                case 0: {
+                    month = "January";
+                    break;
+                }
+                case 1: {
+                    month = "February";
+                    break;
+                }
+                case 2: {
+                    month = "March";
+                    break;
+                }
+                case 3: {
+                    month = "April";
+                    break;
+                }
+                case 4: {
+                    month = "May";
+                    break;
+                }
+                case 5: {
+                    month = "June";
+                    break;
+                }
+                case 6: {
+                    month = "July";
+                    break;
+                }
+                case 7: {
+                    month = "August";
+                    break;
+                }
+                case 8: {
+                    month = "September";
+                    break;
+                }
+                case 9: {
+                    month = "October";
+                    break;
+                }
+                case 10: {
+                    month = "November";
+                    break;
+                }
+                case 11: {
+                    month = "December";
+                    break;
+                }
+                default: {
+                    month = null;
+                }
+            }
+            var day = date.getDate();
+            return month + " " + day + ", " + year;
+        };
+        return NewsReleases;
+    }(NPS.PageComponent));
+    NPS.NewsReleases = NewsReleases;
+})(NPS || (NPS = {}));
+/// <reference path="PageComponent.ts" />
+var NPS;
+(function (NPS) {
+    var Articles = /** @class */ (function (_super) {
+        __extends(Articles, _super);
+        function Articles(data, container) {
+            var _this = _super.call(this, data, container) || this;
+            _this.render = function () {
+                _this.clear();
+                var header = document.createElement("header");
+                var heading = document.createElement("h1");
+                heading.textContent = "Articles";
+                header.appendChild(heading);
+                _this.container.appendChild(header);
+                for (var _i = 0, _a = _this.data; _i < _a.length; _i++) {
+                    var article = _a[_i];
+                    var article_desc = article.listingdescription, _b = article.listingimage, image_alt = _b.altText, image_url = _b.url, article_title = article.title, article_url = article.url;
+                    var article_display = document.createElement("div");
+                    article_display.classList.add("article-display");
+                    var image = document.createElement("img");
+                    image.src = image_url;
+                    image.alt = image_alt;
+                    article_display.appendChild(image);
+                    var title_description = document.createElement("div");
+                    title_description.classList.add("title-description");
+                    var title_a = document.createElement("a");
+                    title_a.target = "_blank";
+                    title_a.href = article_url;
+                    title_a.textContent = article_title;
+                    var title = document.createElement("h4");
+                    title.appendChild(title_a);
+                    var description = document.createElement("div");
+                    description.textContent = article_desc;
+                    title_description.appendChild(title);
+                    title_description.appendChild(description);
+                    article_display.appendChild(title_description);
+                    _this.container.appendChild(article_display);
+                }
+            };
+            _this.render();
+            return _this;
+        }
+        return Articles;
+    }(NPS.PageComponent));
+    NPS.Articles = Articles;
+})(NPS || (NPS = {}));
 /// <reference path="Util.ts" />
 /// <reference path="Suggestions.ts" />
 /// <reference path="DebouncedSearch.ts" />
 /// <reference path="Drawer.ts" />
 /// <reference path="Background.ts" />
+/// <reference path="PageComponents/ParkInfo.ts" />
+/// <reference path="PageComponents/Places.ts" />
+/// <reference path="PageComponents/LessonPlans.ts" />
+/// <reference path="PageComponents/NewsReleases.ts" />
+/// <reference path="PageComponents/Articles.ts" />
 /// <reference path="Dependencies.ts" />
 var NPS;
 (function (NPS) {
@@ -302,55 +640,67 @@ var NPS;
                             parkCode: park_code
                         };
                         var campgrounds_search = new NPS.APICall('/campgrounds', campgrounds_args, function (data) {
-                            console.log(data);
+                            // console.log(data);
                         });
                         var visitor_centers_args = {
                             parkCode: park_code
                         };
                         var visitor_centers_search = new NPS.APICall('/visitorcenters', visitor_centers_args, function (data) {
-                            console.log(data);
+                            // console.log(data);
                         });
                         var alerts_args = {
                             parkCode: park_code
                         };
                         var alerts_search = new NPS.APICall('/alerts', alerts_args, function (data) {
-                            console.log(data);
+                            // console.log(data);
                         });
                         var events_args = {
                             parkCode: park_code
                         };
                         var events_search = new NPS.APICall('/events', events_args, function (data) {
-                            console.log(data);
+                            // console.log(data);
                         });
                         var articles_args = {
-                            parkCode: park_code
+                            parkCode: park_code,
+                            limit: 7
                         };
                         var articles_search = new NPS.APICall('/articles', articles_args, function (data) {
                             console.log(data);
+                            new NPS.Articles(data.data, document.getElementById("park-articles"));
                         });
                         var news_releases_args = {
-                            parkCode: park_code
+                            parkCode: park_code,
+                            limit: 6
                         };
-                        var news_releases_search = new NPS.APICall('/newsreleases', news_releases_args, function (data) {
-                            console.log(data);
+                        new NPS.APICall('/newsreleases', news_releases_args, function (data) {
+                            new NPS.NewsReleases(data.data, document.getElementById("park-news-releases"));
                         });
                         var people_args = {
                             parkCode: park_code
                         };
                         var people_search = new NPS.APICall('/people', people_args, function (data) {
-                            console.log(data);
+                            // console.log(data);
                         });
                         var lesson_plans_args = {
                             parkCode: park_code
                         };
-                        var lesson_plans_search = new NPS.APICall('/events', lesson_plans_args, function (data) {
-                            console.log(data);
+                        new NPS.APICall('/lessonplans', lesson_plans_args, function (data) {
+                            new NPS.LessonPlans(data.data, document.getElementById("park-lesson-plans"));
                         });
+                        // Not sure this exists?
                         var places_args = {
                             parkCode: park_code
                         };
-                        var places_search = new NPS.APICall('/events', places_args, function (data) {
-                            console.log(data);
+                        new NPS.APICall('/places', places_args, function (data) {
+                            // console.log(data);
+                            new NPS.Places(data, document.getElementById("park-places"));
+                        });
+                        var park_data_args = {
+                            parkCode: park_code,
+                            fields: 'images'
+                        };
+                        new NPS.APICall('/parks', park_data_args, function (data) {
+                            new NPS.ParkInfo(data.data, document.getElementById("park-info"));
                         });
                         break;
                     }

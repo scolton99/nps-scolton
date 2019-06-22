@@ -68,6 +68,10 @@ namespace NPS {
                 suggestion_div.appendChild(h3);
                 suggestion_div.appendChild(p);
 
+                suggestion_div.addEventListener("click", () => {
+                    window.location.href = "/park/" + suggestion["parkCode"];
+                });
+
                 this.element.appendChild(suggestion_div);
             }
         };

@@ -12,18 +12,27 @@ html
         link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.8.2/css/all.css')
         script(src='/scripts/application.min.js')
     body.park
-        div#background-image(style=`background-image: url(/images/background/background-${background}-preload.jpg)`)
+        #background-image
             img
         header
-            div.header-left
+            .header-left
                 a(href='/')
                     span.fas.fa-home#home-button
-            div.header-center
+            .header-center
                 img(src='/images/logo.png')
                 span National Parks Service
-            div.header-right
+            .header-right
         section#content
-            div asdf
+            #park-info
+                .loading-container
+                    span.spinner.dark
+            #park-places
+            #park-lesson-plans
+            #park-news-releases
+            #park-articles
+            #park-events
+
+            
 
 
 
