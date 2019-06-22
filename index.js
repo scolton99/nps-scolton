@@ -3,7 +3,7 @@ const Util = require('./util');
 const ParksRouter = require('./routers/parks');
 
 const app = Express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Setup pug as view engine
 app.set('view engine', 'pug');
