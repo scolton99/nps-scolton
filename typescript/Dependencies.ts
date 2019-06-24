@@ -9,3 +9,5 @@
 /// <reference path="PageComponents/NewsReleases.ts" />
 /// <reference path="PageComponents/Articles.ts" />
 /// <reference path="PageComponents/Events.ts" />
+/// <reference path="PageComponents/Alerts.ts" />
+/// <reference path="PageComponents/VisitorCenters.ts" />

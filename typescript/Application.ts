@@ -60,24 +60,27 @@ namespace NPS {
                     });
 
                     const visitor_centers_args = {
-                        parkCode: park_code
+                        parkCode: park_code,
+                        limit: 5
                     };
-                    const visitor_centers_search = new APICall('/visitorcenters', visitor_centers_args, data => {
-                        // console.log(data);
+                    new APICall('/visitorcenters', visitor_centers_args, data => {
+                        new VisitorCenters(data.data, document.getElementById("park-visitor-centers"));
                     });
 
                     const alerts_args = {
-                        parkCode: park_code
+                        parkCode: park_code,
+                        limit: 10
                     };
-                    const alerts_search = new APICall('/alerts', alerts_args, data => {
-                        // console.log(data);
+                    new APICall('/alerts', alerts_args, data => {
+                        new Alerts(data.data, document.getElementById("park-alerts"));
                     });
 
                     const events_args = {
-                        parkCode: park_code
+                        parkCode: park_code,
+                        limit: 10
                     };
                     const events_search = new APICall('/events', events_args, data => {
-                        console.log(data);
+                        // console.log(data);
 
                         new Events(data.data, document.getElementById("park-events"));
                     });

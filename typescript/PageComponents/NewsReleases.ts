@@ -82,7 +82,6 @@ namespace NPS {
             header.appendChild(heading);
             this.container.appendChild(header);
 
-            console.log(this.data);
             for (const news_release of this.data) {
                 const {
                     image: {

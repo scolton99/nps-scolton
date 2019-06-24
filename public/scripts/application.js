@@ -444,7 +444,6 @@ var NPS;
                 heading.textContent = "News Releases";
                 header.appendChild(heading);
                 _this.container.appendChild(header);
-                console.log(_this.data);
                 for (var _i = 0, _a = _this.data; _i < _a.length; _i++) {
                     var news_release = _a[_i];
                     var _b = news_release.image, image_alt = _b.altText, image_url = _b.url, image_credit = _b.credit, news_release_title = news_release.title, news_release_url = news_release.url, news_release_date = news_release.releasedate, news_release_abstract = news_release.abstract;
@@ -470,7 +469,6 @@ var NPS;
                     title.appendChild(title_a);
                     var date = document.createElement("div");
                     date.classList.add("date");
-                    console.log(news_release_date);
                     var date_parts = news_release_date.replace(/\.0/g, "").split(" ")[0].split("-");
                     var year = parseInt(date_parts[0]);
                     var month = parseInt(date_parts[1]) - 1;
@@ -606,15 +604,154 @@ var NPS;
         __extends(Events, _super);
         function Events(data, container) {
             var _this = _super.call(this, data, container) || this;
+            _this.back = function () {
+                if (_this.month == 0) {
+                    _this.month = 11;
+                    _this.year--;
+                }
+                else {
+                    _this.month--;
+                }
+                _this.render();
+            };
+            _this.forward = function () {
+                if (_this.month == 11) {
+                    _this.month = 0;
+                    _this.year++;
+                }
+                else {
+                    _this.month++;
+                }
+                _this.render();
+            };
             _this.render = function () {
                 _this.clear();
+                var header = document.createElement("header");
+                var heading = document.createElement("h1");
+                heading.textContent = "Events";
+                header.appendChild(heading);
+                _this.container.appendChild(header);
+                var iter = Events.days_in_month(_this.month, _this.year);
+                for (var i = 0; i < iter; i++) {
+                    var display_date = i + 1;
+                }
+                var events = _this.data.filter((function (item) {
+                    return item.dates.map(function (date) { return parseInt(date.split("-")[1]) - 1; }).includes(_this.month);
+                }).bind(_this));
+            };
+            var date = new Date();
+            _this.year = date.getFullYear();
+            _this.month = date.getMonth();
+            _this.render();
+            return _this;
+        }
+        Events.leap_year = function (year) {
+            return (year % 4 == 0) && ((year % 100 !== 0) || (year % 400 == 0));
+        };
+        Events.days_in_month = function (month, year) {
+            switch (month) {
+                case 1: {
+                    if (Events.leap_year(year)) {
+                        return 29;
+                    }
+                    else {
+                        return 28;
+                    }
+                }
+                case 8:
+                case 3:
+                case 5:
+                case 10: {
+                    return 30;
+                }
+                case 0:
+                case 2:
+                case 4:
+                case 6:
+                case 7:
+                case 9:
+                case 11: {
+                    return 31;
+                }
+                default: {
+                    return -1;
+                }
+            }
+        };
+        return Events;
+    }(NPS.PageComponent));
+    NPS.Events = Events;
+})(NPS || (NPS = {}));
+/// <reference path="PageComponent.ts" />
+var NPS;
+(function (NPS) {
+    var Alerts = /** @class */ (function (_super) {
+        __extends(Alerts, _super);
+        function Alerts(data, container) {
+            var _this = _super.call(this, data, container) || this;
+            _this.render = function () {
+                _this.clear();
+                var header = document.createElement("header");
+                var heading = document.createElement("h1");
+                heading.textContent = "Alerts";
+                header.appendChild(heading);
+                _this.container.appendChild(header);
+                for (var _i = 0, _a = _this.data; _i < _a.length; _i++) {
+                    var alert_1 = _a[_i];
+                    var alert_abstract = alert_1.abstract, alert_title = alert_1.title, alert_url = alert_1.url;
+                    var title = document.createElement("h4");
+                    var title_a = document.createElement("a");
+                    title_a.textContent = alert_title;
+                    title_a.href = alert_url;
+                    title_a.target = "_blank";
+                    title.appendChild(title_a);
+                    title.classList.add("alert-display");
+                    _this.container.appendChild(title);
+                }
             };
             _this.render();
             return _this;
         }
-        return Events;
+        return Alerts;
     }(NPS.PageComponent));
-    NPS.Events = Events;
+    NPS.Alerts = Alerts;
+})(NPS || (NPS = {}));
+/// <reference path="PageComponent.ts" />
+var NPS;
+(function (NPS) {
+    var VisitorCenters = /** @class */ (function (_super) {
+        __extends(VisitorCenters, _super);
+        function VisitorCenters(data, container) {
+            var _this = _super.call(this, data, container) || this;
+            _this.render = function () {
+                _this.clear();
+                var header = document.createElement("header");
+                var heading = document.createElement("h1");
+                heading.textContent = "Visitor Centers";
+                header.appendChild(heading);
+                _this.container.appendChild(header);
+                for (var _i = 0, _a = _this.data; _i < _a.length; _i++) {
+                    var visitor_center = _a[_i];
+                    var vc_desc = visitor_center.description, vc_name = visitor_center.name, vc_directions = visitor_center.directionsInfo;
+                    var title = document.createElement("h4");
+                    title.textContent = vc_name;
+                    var description = document.createElement("div");
+                    description.classList.add("vc-desc");
+                    description.textContent = vc_desc;
+                    var directions = document.createElement("div");
+                    directions.classList.add("vc-directions");
+                    directions.textContent = "Directions: " + vc_directions;
+                    _this.container.appendChild(title);
+                    _this.container.appendChild(description);
+                    _this.container.appendChild(directions);
+                }
+            };
+            _this.render();
+            return _this;
+        }
+        return VisitorCenters;
+    }(NPS.PageComponent));
+    NPS.VisitorCenters = VisitorCenters;
 })(NPS || (NPS = {}));
 /// <reference path="Util.ts" />
 /// <reference path="Suggestions.ts" />
@@ -627,6 +764,8 @@ var NPS;
 /// <reference path="PageComponents/NewsReleases.ts" />
 /// <reference path="PageComponents/Articles.ts" />
 /// <reference path="PageComponents/Events.ts" />
+/// <reference path="PageComponents/Alerts.ts" />
+/// <reference path="PageComponents/VisitorCenters.ts" />
 /// <reference path="Dependencies.ts" />
 var NPS;
 (function (NPS) {
@@ -669,22 +808,25 @@ var NPS;
                             // console.log(data);
                         });
                         var visitor_centers_args = {
-                            parkCode: park_code
+                            parkCode: park_code,
+                            limit: 5
                         };
-                        var visitor_centers_search = new NPS.APICall('/visitorcenters', visitor_centers_args, function (data) {
-                            // console.log(data);
+                        new NPS.APICall('/visitorcenters', visitor_centers_args, function (data) {
+                            new NPS.VisitorCenters(data.data, document.getElementById("park-visitor-centers"));
                         });
                         var alerts_args = {
-                            parkCode: park_code
+                            parkCode: park_code,
+                            limit: 10
                         };
-                        var alerts_search = new NPS.APICall('/alerts', alerts_args, function (data) {
-                            // console.log(data);
+                        new NPS.APICall('/alerts', alerts_args, function (data) {
+                            new NPS.Alerts(data.data, document.getElementById("park-alerts"));
                         });
                         var events_args = {
-                            parkCode: park_code
+                            parkCode: park_code,
+                            limit: 10
                         };
                         var events_search = new NPS.APICall('/events', events_args, function (data) {
-                            console.log(data);
+                            // console.log(data);
                             new NPS.Events(data.data, document.getElementById("park-events"));
                         });
                         var articles_args = {

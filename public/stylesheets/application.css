@@ -170,6 +170,18 @@ body.park > section#content > div div.news-release-display > div.title-abstract 
   font-size: 0.9em;
 }
 
+body.park > section#content > div h4.alert-display {
+  margin-bottom: 8px;
+}
+
+body.park > section#content > div div.vc-desc {
+  margin-bottom: 5px;
+}
+body.park > section#content > div div.vc-directions {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
 div#background-image {
   position: fixed;
   top: -10px;
