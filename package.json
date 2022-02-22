@@ -1,6 +1,6 @@
 {
   "name": "nps-scolton",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A new website for the National Parks Service.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pavilion99/nps-scolton.git"
+    "url": "git+https://github.com/scolton99/nps-scolton.git"
   },
   "keywords": [
     "national",
@@ -22,11 +22,11 @@
   "author": "Spencer Colton",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pavilion99/nps-scolton/issues"
+    "url": "https://github.com/scolton99/nps-scolton/issues"
   },
-  "homepage": "https://github.com/pavilion99/nps-scolton#readme",
+  "homepage": "https://github.com/scolton99/nps-scolton#readme",
   "dependencies": {
     "express": "^4.17.0",
-    "pug": "^2.0.3"
+    "pug": "^3.0.2"
   }
 }
