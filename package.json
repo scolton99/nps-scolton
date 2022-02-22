@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "build": "echo \"Running build...\" && ./build && echo \"Build complete.\\n\""
+    "local-build": "echo \"Running build...\" && ./build && echo \"Build complete.\\n\""
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,11 @@
   "dependencies": {
     "express": "^4.17.0",
     "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "sass": "^1.49.8",
+    "typescript": "^4.5.5",
+    "uglify-js": "^3.15.1",
+    "yuicompressor": "^2.4.8"
   }
 }

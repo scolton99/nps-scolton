@@ -2,10 +2,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -58,8 +60,8 @@ var NPS;
                 console.log(_this.params);
                 var _loop_1 = function (suggestion) {
                     var failed = false;
-                    for (var _i = 0, _a = Object.keys(_this.params); _i < _a.length; _i++) {
-                        var key = _a[_i];
+                    for (var _b = 0, _c = Object.keys(_this.params); _b < _c.length; _b++) {
+                        var key = _c[_b];
                         if (typeof (_this.params[key]) === "undefined")
                             continue;
                         if (!suggestion[key]) {
@@ -147,11 +149,11 @@ var NPS;
             for (var i = 0; i < keys.length; i++) {
                 var key = keys[i];
                 var value = encodeURIComponent(args_copy[key]);
-                arg_str += key + "=" + value;
+                arg_str += "".concat(key, "=").concat(value);
                 if (i + 1 < keys.length)
                     arg_str += "&";
             }
-            return "" + API_ROOT + endpoint + "?" + arg_str;
+            return "".concat(API_ROOT).concat(endpoint, "?").concat(arg_str);
         };
         return APICall;
     }());
@@ -257,13 +259,13 @@ var NPS;
             var _this = this;
             this.show_background = function () {
                 _this.container.classList.add("loaded");
-                _this.image.src = "/images/background/background-" + _this.background_number + ".jpg";
+                _this.image.src = "/images/background/background-".concat(_this.background_number, ".jpg");
             };
             this.container = container;
             this.image = image;
             this.background_number = Background.get_background_number();
             NPS.Util.preload_images([
-                "/images/background/background-" + this.background_number + ".jpg"
+                "/images/background/background-".concat(this.background_number, ".jpg")
             ], [
                 this.show_background
             ]);
@@ -323,7 +325,7 @@ var NPS;
                 _this.container.appendChild(header);
                 var image_container = document.createElement("section");
                 image_container.classList.add("image");
-                image_container.style.background = "url(" + img_src + ")";
+                image_container.style.background = "url(".concat(img_src, ")");
                 image_container.style.backgroundSize = "cover";
                 image_container.title = img_alt;
                 var image_caption = document.createElement("div");
@@ -340,7 +342,7 @@ var NPS;
                 };
                 var lat = lat_long.lat, long = lat_long.long;
                 var map_src = "https://www.google.com/maps/embed/v1/view?key=AIzaSyB-M5tJXFIL2ANThjOaCNcYl2DyJsPastI";
-                map_src += "&center=" + lat + "," + long;
+                map_src += "&center=".concat(lat, ",").concat(long);
                 map_src += "&zoom=10";
                 map.src = map_src;
                 map.setAttribute("frameborder", "0");
@@ -545,7 +547,7 @@ var NPS;
                 }
             }
             var day = date.getDate();
-            return month + " " + day + ", " + year;
+            return "".concat(month, " ").concat(day, ", ").concat(year);
         };
         return NewsReleases;
     }(NPS.PageComponent));
